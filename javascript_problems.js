@@ -351,3 +351,183 @@ const panagram = (str) => {
 };
 
 console.log(panagram(ip));
+
+
+//15.How would you reverse words in a sentence?
+// If you have a string like "I am the good boy". How can you generate "I ma eht doog yob"? Please note that the words are in place but reverse.
+
+const reverseWords = str => {
+  str = str.split(' ')
+  for(let i = 0; i < str.length; i++) {
+    str[i] =str[i].split('').reverse().join('')
+  }
+
+//   return str.split(' ').map((st) => st.split('').reverse().join('')).join(' ')
+
+  return str.join(' ')
+}
+
+console.log(reverseWords('The quick brown fox jumps over the lazy dog.'))
+// output: 'ehT kciuq nworb xof spmuj revo eht yzal .god'
+
+
+
+
+
+//16 program to replace all occurrence of a string
+const string = 'Mr red has a red house and a red car';
+const result = string.split('red').join('blue');
+console.log(result);
+
+
+//17. Program to Convert the First Letter of a String into UpperCase
+const string1 = 'Mr red has a red house and a red car';
+const result1 = string.split(' ').map(i => i[0].toUpperCase()+i.slice(1)).join(' ')
+console.log(result1);
+
+
+
+//18. from a unsorted array of numbers 1 to 100 excluding one number, how will you find that number.
+let arr = [1,2,3,4,5,6,8,9,10]
+const findNumber = arr => {
+  let n = 10
+  let totalSum = (n * (n+1))/2
+  let arraySum = arr.reduce((el, acc) => el+acc)
+  console.log(totalSum - arraySum)
+}
+
+findNumber(arr)
+
+
+//19. missing number from unique unsorted array
+const miss = (arr) => {
+    let missNumber = [];
+    let max = Math.max(...arr)
+    for(let i = 1; i < max; i++) {
+      if(arr.indexOf(i) === -1){
+        missNumber.push(i)
+      }
+    }
+    return missNumber
+}
+console.log(miss([3,4,1,2,6,8,12]));
+
+
+//20. From a unsorted array, check whether there are any two numbers that will sum up to a given number?
+const sumFinder = (arr, sum) => {
+  let obj = {};
+  
+  for(let i = 0; i < arr.length; i++) {
+    let diff = sum - arr[i];
+    if(obj[diff]){
+      return [arr[i], arr[obj[diff]]]
+    }else{
+      obj[arr[i]] = [i]
+    }
+  }
+  return false
+}
+
+let sumFinderResult = sumFinder([6, 4, 3, 2], 8)
+
+
+console.log(sumFinderResult)
+
+
+
+// 21. Find the possible permutations of the given string
+let findPermutations1 = (string) => {
+  if (!string || typeof string !== "string"){
+    return "Please enter a string"
+  } else if (string.length < 2 ){
+    return string
+  }
+
+  // This array will hold our permutations
+  let permutationsArray = [] 
+   
+  for (let i = 0; i < string.length; i++){
+    let char = string[i]
+
+    // if char was used already, skip this time to remove duplicates
+    if (string.indexOf(char) != i)
+    continue
+
+    let remainingChars = string.slice(0, i) + string.slice(i + 1, string.length)
+
+
+    for (let permutation of findPermutations(remainingChars)){
+      permutationsArray.push(char + permutation) }
+  }
+  return permutationsArray
+} 
+
+
+findPermutations1('aabm')
+
+
+
+//22.  Number of possible substrings from a string code and time complexity
+const subStr = (str) => {
+  let subStrings = []
+  
+  for(let i = 0; i < str.length; i++) {
+    subStrings.push(str[i])
+    
+    for(let j = i+1; j < str.length; j++) {
+      let lastElement = subStrings[subStrings.length - 1];
+      let currentSubStr = lastElement + str[j];
+      console.log({lastElement, currentSubStr} )
+      subStrings.push(currentSubStr)
+    }
+  }
+  return subStrings
+}
+console.log("====>",subStr('abcd'))
+
+//-------
+const getSubString = (str) => {
+  let result = [];
+  
+  for(let i = 0; i < str.length; i++) {
+    let subStr = str[i];
+    result.push(subStr)
+    for(let j = i+1; j < str.length; j++) {
+      subStr = subStr+str[j]
+      result.push(subStr)
+    }
+  }
+  return result;
+}
+
+console.log("getSubString==>",getSubString('abcd'))
+
+
+
+// 23. Largest palindrome in string of words-------------------------
+let str1 = 'aba abba abbba abc'
+// o/p = abba
+
+function isPlindrome(str){
+  return str == str.split('').reverse().join('')
+}
+
+function largestPalindrome(str) {
+  str = str.split(' ')
+  let max = ''
+  for(let i = 0; i < str.length; i++) {
+    if(isPlindrome(str[i])){
+      // let currentStrLen = str[i].length;
+      // let maxLength = max.length;
+      
+      // if(currentStrLen >= maxLength) {
+      //   max = str[i]
+      // }
+      max = max.length > str[i].length ? max : str[i]
+      // max = Math.max(maxLength, currentStrLen)
+    }
+  }
+  return max
+}
+
+console.log(largestPalindrome(str1))
